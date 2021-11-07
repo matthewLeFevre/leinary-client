@@ -1,0 +1,29 @@
+// Alert Colors For Buttons & notifications
+.txt-center {
+  text-align: center;
+}
+
+// Visibility Utilities
+.hide {
+  display: none !important;
+}
+
+@each $bp, $value in $break-points {
+  .show-at-#{$bp} {
+    @include bp($value) {
+      display: block !important;
+    }
+  }
+
+  .show-flex-at-#{$bp} {
+    @include bp($value) {
+      display: flex !important;
+    }
+  }
+
+  .hide-at-#{$bp} {
+    @include bp($value) {
+      display: none !important;
+    }
+  }
+}

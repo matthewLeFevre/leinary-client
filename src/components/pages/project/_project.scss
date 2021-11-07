@@ -1,0 +1,48 @@
+.project__section {
+  // padding: 1rem;
+  background-color: white;
+  box-shadow: $bs-1;
+  @include bp($bp-lrg) {
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+}
+
+.project__section__title {
+  // margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #bbb;
+  box-shadow: $bs-1;
+}
+
+.project-editor__components {
+  padding: 1rem;
+  & > * {
+    margin-bottom: 2rem;
+  }
+}
+
+.project-editor-component {
+  &__endpoint {
+  }
+  &__figure {
+  }
+  &__title {
+  }
+  &__text {
+  }
+}
+
+.project-viewer__components {
+  padding: 1rem;
+  & > * {
+    margin-bottom: 1rem;
+  }
+  padding-bottom: 5rem;
+}
+
+.project-viewer__text-component {
+  & > * {
+    margin-bottom: 1rem;
+  }
+}

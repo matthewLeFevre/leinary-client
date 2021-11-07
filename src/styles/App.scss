@@ -1,0 +1,18 @@
+@import "./variables";
+@import "./functions";
+@import "./mixins";
+@import "./reset";
+@import "./grid";
+@import "./utilities";
+@import "./form";
+@import "../components/pages/project/project";
+
+@import "../components/common/appheader";
+
+body {
+  background-color: #eee;
+}
+
+.page__container {
+  padding: 2rem;
+}

@@ -1,0 +1,24 @@
+.app-header {
+  background-color: $indigo;
+  padding: 1rem;
+  @include flex(row, nowrap, flex-start, center);
+}
+
+.app-header .logo {
+  img {
+    height: 25px;
+  }
+}
+
+.app-header-nav {
+  @include flex(row, nowrap, flex-start, center);
+  margin-left: auto;
+  display: inline-flex;
+  a {
+    color: white;
+    margin-right: 1rem;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+  }
+}

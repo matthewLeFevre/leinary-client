@@ -1,0 +1,22 @@
+input,
+textarea {
+  border-radius: 4px;
+  padding: 0.5rem;
+  border: 2px solid #ccc;
+  display: block;
+  width: 100%;
+
+  &:focus,
+  &:focus-visible,
+  &:active,
+  &:hover {
+    border: 2px solid #999;
+    outline: none;
+  }
+}
+
+textarea {
+  min-height: 75px !important;
+  max-height: 500px !important;
+  overflow-y: auto;
+}

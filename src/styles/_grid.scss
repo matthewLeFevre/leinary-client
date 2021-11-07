@@ -1,0 +1,43 @@
+$gridColumns: 12;
+@mixin grid-builder($columns: 12, $usingGap: false, $gap: $spacing-2) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-auto-rows: minmax(50px, auto);
+  @if $usingGap {
+    grid-gap: $gap;
+  }
+}
+
+.grid {
+  @include grid-builder;
+}
+
+.grid--gap {
+  @include grid-builder(12, true);
+}
+
+.col {
+  @for $column from 1 through $gridColumns {
+    &--#{$column} {
+      grid-column: span $column;
+    }
+  }
+  // .col--1
+  // .col--12
+
+  @each $size, $value in $break-points {
+    &--#{$size} {
+      @include bp($value) {
+        @for $column from 1 through $gridColumns {
+          &--#{$column} {
+            grid-column: span $column;
+          }
+        }
+      }
+    }
+  }
+}
+
+// .col--tiny--1
+// .col--tiny--12
+// .col--sml--1 - 12

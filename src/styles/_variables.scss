@@ -1,0 +1,116 @@
+/**
+* Global variabls contain information
+* related styling of the application
+*/
+
+// 1. Color
+// Indigo
+$indigo: #223843;
+$indigo-variants: #223843 #475c67 #7d8c94 #a9b3b7;
+
+// Lava
+$lava: #d1102d;
+$lava-variants: #d1102d #da4057 #e37081 #ed9fab;
+
+// tigerseye
+$tigerseye: #d8973c;
+$tigerseye-variants: #d8973c #e0ac63 #e8c18a #efd5b1;
+
+// metallicseaweed
+$metallicseaweed: #087e8b;
+$metallicseaweed-variants: #087e8b #3998a2 #6bb2b9 #9ccbd1;
+
+//orangesoca
+$orangesoca: #f85a3e;
+$orangesoca-variants: #f85a3e #f97b65 #fb9c8b #fcbdb2;
+
+//bottlegreen
+$bottlegreen: #0b6e4f;
+$bottlegreen-variants: #0b6e4f #3c8b72 #6da895 #9dc5b9;
+
+$confirm: #084887;
+$confirm-variants: #084887 #396d9f #6b91b7 #9cb6cf;
+$success: #5bba6f;
+$success-variants: #5bba6f #7cc88c #9dd6a9 #bde3c5;
+$caution: #ffcc42;
+$caution-variants: #ffcc42 #ffd668 #ffe08e #ffebb3;
+$warning: #b0413e;
+$warning-variants: #b0413e #c06765 #d08d8b #dfb3b2;
+
+// 2. Fonts
+$font-primary: "Open Sans", sans-serif;
+
+// Font Size
+$font-tiny: 12px;
+$font-sml: 14px;
+$font-med: 16px;
+$font-medlrg: 18px;
+$font-lrg: 24px;
+$font-xlrg: 28px;
+$font-ult: 32px;
+$font-xult: 40px;
+
+// Default Font-Heading
+$h1: $font-ult;
+$h2: $font-xlrg;
+$h3: $font-lrg;
+$h4: $font-medlrg;
+
+// Font Weight
+$fw-1: 100;
+$fw-2: 300;
+$fw-3: 400;
+$fw-4: 700;
+
+// 3. Breakpoints (subject to change)
+
+$bp-tiny: 350px;
+$bp-tiny-2: 400px;
+$bp-tinysml: 450px;
+$bp-sml: 600px;
+$bp-smlmed: 650px;
+$bp-med: 800px;
+$bp-medlrg: 900px;
+$bp-lrg: 1024px;
+$bp-lrgxlg: 1200px;
+$bp-xlrg: 1280px;
+$bp-ult: 1440px;
+
+// breakpoint map
+$break-points: (
+  "tiny": $bp-tiny,
+  "tiny-2": $bp-tiny-2,
+  "tinysml": $bp-tinysml,
+  "sml": $bp-sml,
+  "smlmed": $bp-smlmed,
+  "med": $bp-med,
+  "medlrg": $bp-medlrg,
+  "lrg": $bp-lrg,
+  "xlrg": $bp-xlrg,
+  "ult": $bp-ult,
+);
+
+// 4. Spacing (padding/margins)
+
+$spacing-1: 5px;
+$spacing-2: 10px;
+$spacing-3: 15px;
+$spacing-4: 20px;
+
+// 5. Z-index
+$z-floor: 0;
+$z-glide: 5;
+$z-float: 10;
+$z-hover: 20;
+$z-alert: 80;
+$z-ceiling: 100;
+
+// 6. Box Shadow
+$bs-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$bs-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$bs-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+// 7. Border Radius
+$br-1: 5px;
+$br-2: 10px;
+$br-3: 15px;

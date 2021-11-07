@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router";
+import Router from "./components/utilities/Router";
+import {
+  ProjectContext,
+  ProjectsContext,
+  UserContext,
+} from "./services/contexts";
+import { useProject, useProjects } from "./services/hooks";
+// import { socket, SocketContext } from "./services/contents";
+import "./styles/App.scss";
 
 function App() {
+  const project = useProject();
+  const projects = useProjects([
+    {
+      name: "New Project",
+      pages: [
+        {
+          id: "1234",
+          name: "New Page",
+          components: [],
+          order: 0,
+        },
+      ],
+      status: "PRIVATE",
+      id: "1234",
+    },
+  ]);
+  const [user, setUser] = useState({});
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={{ user, setUser }}>
+      <ProjectsContext.Provider value={projects}>
+        <ProjectContext.Provider value={project}>
+          <Router />
+        </ProjectContext.Provider>
+      </ProjectsContext.Provider>
+    </UserContext.Provider>
   );
 }
 

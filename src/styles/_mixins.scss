@@ -1,0 +1,31 @@
+// This is the breakpoint mixin it can be used
+// inside of elements to specify media query code
+@mixin bp($bp) {
+  @media only screen and (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin print() {
+  @media print {
+    @content;
+  }
+}
+
+// flexbox mixin to streamline the code
+@mixin flex(
+  $orientation: row,
+  $wrapping: wrap,
+  $justify: flex-start,
+  $align: flex-start
+) {
+  display: flex;
+  flex-flow: $orientation $wrapping;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// transitions
+@mixin transition($type: all, $duration: 0.25s, $trans-type: ease-in-out) {
+  transition: $type $duration $trans-type;
+}
