@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
+import MarkDownTextArea from "../../common/inputs/MarkDownTextArea";
 
 export default function ProjectEditorComponent({
   component,
@@ -52,6 +53,7 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
         <option>PATCH</option>
         <option>DELETE</option>
       </select>
+      <label>Path</label>
       <input
         type='text'
         value={component.path}
@@ -65,7 +67,8 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           })
         }
       />
-      <textarea
+      <label>Description</label>
+      <MarkDownTextArea
         value={component.content}
         onChange={e =>
           onUpdate({
@@ -77,7 +80,8 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           })
         }
       />
-      <textarea
+      <label>Response Example</label>
+      <MarkDownTextArea
         value={component.responseExample}
         onChange={e =>
           onUpdate({
@@ -89,7 +93,8 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           })
         }
       />
-      <textarea
+      <label>Request Example</label>
+      <MarkDownTextArea
         value={component.requestExample}
         onChange={e =>
           onUpdate({
@@ -122,7 +127,7 @@ function FigureEditorComponent({ component, onDelete, updateComponent }) {
           })
         }
       />
-      <textarea
+      <MarkDownTextArea
         value={component.content}
         onChange={e =>
           onUpdate({
@@ -140,36 +145,10 @@ function FigureEditorComponent({ component, onDelete, updateComponent }) {
 
 function TextEditorComponent({ component, onDelete, updateComponent }) {
   const { pageId } = useParams();
-  const [height, setHeight] = useState(0);
-  const adjustHeight = e => {
-    console.log(e.target.scrollHeight);
-    setHeight(
-      e.target.scrollHeight > e.target.clientHeight ? e.target.scrollHeight : 0
-    );
-  };
-  const processTab = e => {
-    if (e.key == "Tab") {
-      e.preventDefault();
-      var start = e.target.selectionStart;
-      var end = e.target.selectionEnd;
-
-      // set textarea value to: text before caret + tab + text after caret
-      e.target.value =
-        e.target.value.substring(0, start) +
-        "\t" +
-        e.target.value.substring(end);
-
-      // put caret at right position again
-      e.target.selectionStart = e.target.selectionEnd = start + 1;
-    }
-  };
   return (
     <div className='project-editor-component__text'>
-      <textarea
-        style={{ height }}
+      <MarkDownTextArea
         value={component.content}
-        onKeyUp={adjustHeight}
-        onKeyDown={processTab}
         onChange={e =>
           onUpdate({
             property: "content",

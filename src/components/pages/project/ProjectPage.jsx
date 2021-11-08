@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { useClickAway } from "react-use";
 import { useProject, useProjectCTX } from "../../../services/hooks";
 import { useParams } from "react-router";
+import gripImage from "../../../assets/grip-lines-solid.svg";
+import trash from "../../../assets/trash-solid.svg";
+import { Draggable } from "react-beautiful-dnd";
 
 export default function ProjectPage({ page }) {
   const { projectId } = useParams();
@@ -25,25 +28,54 @@ export default function ProjectPage({ page }) {
     const newPage = { ...page, name: e.target.value };
     updatePage(newPage);
   };
+  const onKeyUp = e => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setEdit(false);
+    }
+  };
   return (
-    <li>
-      {!edit ? (
-        <>
-          <Link
-            onDoubleClick={() => setEdit(true)}
-            to={`/project/${projectId}/page/${page.id}`}
+    <Draggable draggableId={page.id} index={parseInt(page.order)}>
+      {(provided, snapshot) => (
+        <li
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          className='project-nav__page'
+        >
+          <div
+            {...provided.dragHandleProps}
+            className='project-nav__page-grip'
+            title='Change Page Order'
           >
-            {page.name}
-          </Link>
-          <button onClick={() => setEdit(true)}>Edit</button>
-          <button onClick={() => deletePage(page.id)}>Delete</button>
-        </>
-      ) : (
-        <>
-          <input value={page.name} onChange={onChangeName} ref={inputRef} />
-          <button onClick={() => setEdit(false)}>Cancel</button>
-        </>
+            <img src={gripImage} />
+          </div>
+          {!edit ? (
+            <>
+              <Link
+                title='Double click to change page title'
+                onDoubleClick={() => setEdit(true)}
+                to={`/project/${projectId}/page/${page.id}`}
+              >
+                {page.name}
+              </Link>
+              <button
+                className='project-nav__page-button'
+                onClick={() => deletePage(page.id)}
+                title='Delete Page'
+              >
+                <img src={trash} />
+              </button>
+            </>
+          ) : (
+            <input
+              onKeyUp={onKeyUp}
+              value={page.name}
+              onChange={onChangeName}
+              ref={inputRef}
+            />
+          )}
+        </li>
       )}
-    </li>
+    </Draggable>
   );
 }

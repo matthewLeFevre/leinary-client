@@ -22,9 +22,9 @@ export default function ProjectEditor({ tools, page }) {
           />
         ))}
         <div>
-          <button type='button' onClick={() => addTitleComponent(page?.id)}>
+          {/* <button type='button' onClick={() => addTitleComponent(page?.id)}>
             Add Title
-          </button>
+          </button> */}
           <button type='button' onClick={() => addTextComponent(page?.id)}>
             Add Text
           </button>

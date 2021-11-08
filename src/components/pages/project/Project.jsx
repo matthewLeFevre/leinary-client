@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useDebounce } from "react-use";
 import { useProjectCTX, useProjectsCTX } from "../../../services/hooks";
 import AuthenticatedPageContainer from "../../utilities/AuthenticatedPageContainer";
 import ProjectEditor from "./ProjectEditor";
@@ -7,12 +8,24 @@ import ProjectNav from "./ProjectNav";
 import ProjectViewer from "./ProjectViewer";
 
 export default function Project() {
+  const [saving, setSaving] = useState(false);
   const { projects } = useProjectsCTX();
   const tools = useProjectCTX();
   const { pageId, projectId } = useParams();
   const [activePage, setActivePage] = useState(
     tools?.pages?.find(p => p.id === pageId)
   );
+  const saveProject = async () => {
+    setSaving(true);
+    await fetch(`http://localhost:3333/projects/${tools.project.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ project: tools.project }),
+    });
+    setSaving(false);
+  };
   useEffect(() => {
     const activeProject = projects?.find(pj => pj.id === projectId);
     if (projectId) {
@@ -22,6 +35,7 @@ export default function Project() {
       setActivePage(activeProject?.pages?.find(p => p.id === pageId));
     }
   }, [projectId, pageId]);
+  useDebounce(saveProject, 3000, [tools.project]);
   useEffect(() => {}, [pageId]);
   return (
     <AuthenticatedPageContainer>

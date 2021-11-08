@@ -1,7 +1,12 @@
 import { useContext, useState } from "react";
 // import { SocketContext } from "./contents";
 import randomId from "random-id";
-import { getItemById, removeAndReorder, safePushToIndex } from "./arrayUtil";
+import {
+  getItemById,
+  removeAndReorder,
+  safePushToIndex,
+  safeReorderByIndex,
+} from "./arrayUtil";
 import { ProjectContext, UserContext, ProjectsContext } from "./contexts";
 
 // export function useSocket() {
@@ -69,8 +74,18 @@ export function useProject(
     pages[index] = pageUpdates;
     keyChange("pages", pages);
   };
+  const reorderPage = (pageId, desiredIndex) => {
+    // debugger;
+    const page = getItemById(project.pages, pageId);
+    const reorderedPages = safeReorderByIndex(
+      project.pages,
+      page,
+      desiredIndex
+    );
+    keyChange("pages", reorderedPages);
+  };
   const addTitleComponent = (pageId, order = null) => {
-    debugger;
+    // debugger;
     let page = getItemById(project.pages, pageId);
     const trueOrder = order || page?.components?.length;
     const title = {
@@ -147,6 +162,7 @@ export function useProject(
     keyChange,
     addPage,
     updatePage,
+    reorderPage,
     deletePage,
     addTitleComponent,
     addTextComponent,

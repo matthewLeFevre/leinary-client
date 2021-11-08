@@ -11,6 +11,7 @@ export default function ProjectViewerComponent({ component }) {
     case "FIGURE":
       return <FigureComponent component={component} />;
     case "ENDPOINT":
+      return <EndpointComponent component={component} />;
     default:
       return <div>{component.type}</div>;
   }
@@ -36,7 +37,24 @@ const TextComponent = ({ component }) => (
     <MarkdownHighlighter>{component.content}</MarkdownHighlighter>
   </div>
 );
-const EndpointComponent = ({ component }) => <div></div>;
+const EndpointComponent = ({ component }) => (
+  <div>
+    <div>
+      <span>{component.httpVerb}</span>
+      {component.path}
+    </div>
+    <label>Description</label>
+    <MarkdownHighlighter>{component.content}</MarkdownHighlighter>
+    <label>Response Example:</label>
+    <MarkdownHighlighter>{component.responseExample}</MarkdownHighlighter>
+    {component.requestExample ? (
+      <>
+        <label>Request Example</label>
+        <MarkdownHighlighter>{component.requestExample}</MarkdownHighlighter>
+      </>
+    ) : null}
+  </div>
+);
 const FigureComponent = ({ component }) => (
   <figure>
     <img src={component.imgResource} />
