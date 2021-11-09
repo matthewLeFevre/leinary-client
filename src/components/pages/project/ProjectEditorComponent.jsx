@@ -1,34 +1,57 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import MarkDownTextArea from "../../common/inputs/MarkDownTextArea";
+import gripImage from "../../../assets/grip-vertical.svg";
+import close from "../../../assets/close.svg";
+import { useProjectCTX } from "../../../services/hooks";
 
 export default function ProjectEditorComponent({
   component,
   onDelete,
   updateComponent,
 }) {
-  switch (component.type) {
-    case "TEXT":
-      return (
-        <TextEditorComponent {...{ component, updateComponent, onDelete }} />
-      );
-    case "TITLE":
-      return (
-        <TitleEditorComponent {...{ component, updateComponent, onDelete }} />
-      );
-    case "FIGURE":
-      return (
-        <FigureEditorComponent {...{ component, updateComponent, onDelete }} />
-      );
-    case "ENDPOINT":
-      return (
-        <EndpointEditorComponent
-          {...{ component, updateComponent, onDelete }}
-        />
-      );
-    default:
-      return <div>{component.type}</div>;
-  }
+  const { pageId } = useParams();
+  const { deleteComponent } = useProjectCTX();
+  const getComponent = () => {
+    switch (component.type) {
+      case "TEXT":
+        return (
+          <TextEditorComponent {...{ component, updateComponent, onDelete }} />
+        );
+      case "TITLE":
+        return (
+          <TitleEditorComponent {...{ component, updateComponent, onDelete }} />
+        );
+      case "FIGURE":
+        return (
+          <FigureEditorComponent
+            {...{ component, updateComponent, onDelete }}
+          />
+        );
+      case "ENDPOINT":
+        return (
+          <EndpointEditorComponent
+            {...{ component, updateComponent, onDelete }}
+          />
+        );
+      default:
+        return <div>{component.type}</div>;
+    }
+  };
+  return (
+    <div className='project-editor-component'>
+      <div className='project-editor-component__drag'>
+        <img src={gripImage} />
+      </div>
+      {getComponent()}
+      <button
+        onClick={() => deleteComponent(pageId, component.id)}
+        className='project-editor-component__delete'
+      >
+        <img src={close} />
+      </button>
+    </div>
+  );
 }
 
 function EndpointEditorComponent({ component, onDelete, updateComponent }) {

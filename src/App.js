@@ -12,21 +12,7 @@ import "./styles/App.scss";
 
 function App() {
   const project = useProject();
-  const projects = useProjects([
-    {
-      name: "New Project",
-      pages: [
-        {
-          id: "1234",
-          name: "New Page",
-          components: [],
-          order: 0,
-        },
-      ],
-      status: "PRIVATE",
-      id: "1234",
-    },
-  ]);
+  const projects = useProjects([]);
   const [user, setUser] = useState({});
 
   return (

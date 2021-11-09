@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useClickAway } from "react-use";
 import { useProject, useProjectCTX } from "../../../services/hooks";
 import { useParams } from "react-router";
-import gripImage from "../../../assets/grip-lines-solid.svg";
-import trash from "../../../assets/trash-solid.svg";
+import gripImage from "../../../assets/grip-vertical.svg";
+import close from "../../../assets/close.svg";
 import { Draggable } from "react-beautiful-dnd";
 
 export default function ProjectPage({ page }) {
-  const { projectId } = useParams();
+  const { projectId, pageId } = useParams();
   const { deletePage, updatePage } = useProjectCTX();
   const [edit, setEdit] = useState(false);
   const inputRef = useRef(null);
@@ -18,12 +18,6 @@ export default function ProjectPage({ page }) {
       setEdit(false);
     }
   });
-  useEffect(() => {
-    if (edit) {
-      // inputRef.current.focus();
-      inputRef.current.select();
-    }
-  }, [edit]);
   const onChangeName = e => {
     const newPage = { ...page, name: e.target.value };
     updatePage(newPage);
@@ -40,7 +34,7 @@ export default function ProjectPage({ page }) {
         <li
           ref={provided.innerRef}
           {...provided.draggableProps}
-          className='project-nav__page'
+          className={`project-nav__page ${pageId === page.id ? "active" : ""}`}
         >
           <div
             {...provided.dragHandleProps}
@@ -63,7 +57,7 @@ export default function ProjectPage({ page }) {
                 onClick={() => deletePage(page.id)}
                 title='Delete Page'
               >
-                <img src={trash} />
+                <img src={close} />
               </button>
             </>
           ) : (
