@@ -31,21 +31,7 @@ export function useUser() {
   return useContext(UserContext);
 }
 
-export function useProject(
-  initialProject = {
-    name: "New Project",
-    pages: [
-      {
-        id: randomId(),
-        name: "New Page",
-        components: [],
-        order: 0,
-      },
-    ],
-    status: "PRIVATE",
-    id: randomId(),
-  }
-) {
+export function useProject(initialProject) {
   const [project, setProject] = useState(initialProject);
   const keyChange = (key, value) => {
     setProject(prevProject => {
@@ -75,7 +61,9 @@ export function useProject(
     keyChange("pages", pages);
   };
   const reorderPage = (pageId, desiredIndex) => {
+    console.log("pages", project.pages);
     const page = getItemById(project.pages, pageId);
+    console.log("page", page);
     const reorderedPages = safeReorderByIndex(
       project.pages,
       page,

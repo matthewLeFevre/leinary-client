@@ -6,9 +6,11 @@ import remarkGfm from "remark-gfm";
 
 // https://www.npmjs.com/package/react-markdown
 
-export default function MarkdownHighlighter({ children }) {
+export default function MarkdownHighlighter({ content }) {
   return (
     <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      children={content}
       components={{
         code({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
@@ -27,9 +29,6 @@ export default function MarkdownHighlighter({ children }) {
           );
         },
       }}
-      remarkPlugins={[remarkGfm]}
-    >
-      {children}
-    </ReactMarkdown>
+    />
   );
 }

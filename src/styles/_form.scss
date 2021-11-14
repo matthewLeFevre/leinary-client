@@ -1,10 +1,13 @@
 input,
-textarea {
+textarea,
+select {
   border-radius: 4px;
   padding: 0.25rem;
   border: 2px solid #ccc;
   display: block;
   width: 100%;
+  line-height: 1.5;
+  font-size: 16px;
 
   &:focus,
   &:focus-visible,
@@ -13,6 +16,11 @@ textarea {
     border: 2px solid #999;
     outline: none;
   }
+}
+
+input,
+select {
+  height: 36px;
 }
 
 textarea {

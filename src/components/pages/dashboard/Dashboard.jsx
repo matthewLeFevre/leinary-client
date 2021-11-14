@@ -26,7 +26,6 @@ export default function Dashboard() {
       });
       setProjectName("");
       setProjects(prev => [...prev, result.data]);
-      console.log(result);
     }
   };
   return (

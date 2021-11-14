@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import MarkdownHighlighter from "../../utilities/MarkdownHighlighter";
 
@@ -18,7 +18,6 @@ export default function ProjectViewerComponent({ component }) {
 }
 
 const TitleComponent = ({ component }) => {
-  console.log(component.level === 4);
   switch (parseInt(component.level)) {
     case 2:
       return <h2>{component.content}</h2>;
@@ -34,30 +33,91 @@ const TitleComponent = ({ component }) => {
 };
 const TextComponent = ({ component }) => (
   <div className='project-viewer__text-component'>
-    <MarkdownHighlighter>{component.content}</MarkdownHighlighter>
+    <MarkdownHighlighter content={component.content} />
   </div>
 );
-const EndpointComponent = ({ component }) => (
-  <div>
-    <div>
-      <span>{component.httpVerb}</span>
-      {component.path}
+const EndpointComponent = function ({ component }) {
+  const [tab, setTab] = useState("DESCRIPTION");
+  const [open, setOpen] = useState(false);
+  return (
+    <div className='project-viewer__endpoint-component'>
+      <div className='project-viewer__endpoint-component__path'>
+        <span
+          className={`project-viewer__endpoint-component__http-verb ${component.httpVerb}`}
+        >
+          {component.httpVerb}
+        </span>
+        <code>{component.path}</code>
+        <button
+          className='project-viewer__endpoint-component__toggle'
+          onClick={() => setOpen(prev => !prev)}
+        >
+          {open ? "Close Details" : "View Details"}
+        </button>
+      </div>
+      <div className={`${!open && "hide"}`}>
+        <div>
+          {component?.content ? (
+            <label
+              onClick={() => setTab("DESCRIPTION")}
+              className={`project-viewer__endpoint-component__tab ${
+                tab === "DESCRIPTION" ? "active" : ""
+              }`}
+            >
+              Description
+            </label>
+          ) : null}
+          {component?.requestExample ? (
+            <label
+              onClick={() => setTab("REQUEST")}
+              className={`project-viewer__endpoint-component__tab ${
+                tab === "REQUEST" ? "active" : ""
+              }`}
+            >
+              Request
+            </label>
+          ) : null}
+          {component?.responseExample ? (
+            <label
+              onClick={() => setTab("RESPONSE")}
+              className={`project-viewer__endpoint-component__tab ${
+                tab === "RESPONSE" ? "active" : ""
+              }`}
+            >
+              Response
+            </label>
+          ) : null}
+        </div>
+        <div className='project-viewer__endpoint-component__content'>
+          {component?.content ? (
+            <FadeIn visible={tab === "DESCRIPTION"}>
+              <MarkdownHighlighter content={component.content} />
+            </FadeIn>
+          ) : null}
+          {component?.responseExample ? (
+            <FadeIn visible={tab === "REQUEST"}>
+              <MarkdownHighlighter content={component.requestExample} />
+            </FadeIn>
+          ) : null}
+          {component?.responseExample ? (
+            <FadeIn visible={tab === "RESPONSE"}>
+              <MarkdownHighlighter content={component.responseExample} />
+            </FadeIn>
+          ) : null}
+        </div>
+      </div>
     </div>
-    <label>Description</label>
-    <MarkdownHighlighter>{component.content}</MarkdownHighlighter>
-    <label>Response Example:</label>
-    <MarkdownHighlighter>{component.responseExample}</MarkdownHighlighter>
-    {component.requestExample ? (
-      <>
-        <label>Request Example</label>
-        <MarkdownHighlighter>{component.requestExample}</MarkdownHighlighter>
-      </>
-    ) : null}
-  </div>
-);
+  );
+};
 const FigureComponent = ({ component }) => (
   <figure>
     <img src={component.imgResource} />
     <figcaption>{component.content}</figcaption>
   </figure>
+);
+
+const fade = ({ trigger }) => {};
+
+const FadeIn = ({ visible = true, children }) => (
+  <div className={`fade-in ${visible ? "visible" : "hidden"}`}>{children}</div>
 );

@@ -13,7 +13,6 @@ export default function ProjectPage({ page }) {
   const [edit, setEdit] = useState(false);
   const inputRef = useRef(null);
   useClickAway(inputRef, () => {
-    console.log("editing");
     if (edit) {
       setEdit(false);
     }

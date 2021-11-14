@@ -58,77 +58,90 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
   const { pageId } = useParams();
   return (
     <div className='project-editor-component__endpoint'>
-      <select
-        value={component.httpVerb}
-        onChange={e =>
-          onUpdate({
-            property: "httpVerb",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      >
-        <option>GET</option>
-        <option>POST</option>
-        <option>PUT</option>
-        <option>PATCH</option>
-        <option>DELETE</option>
-      </select>
-      <label>Path</label>
-      <input
-        type='text'
-        value={component.path}
-        onChange={e =>
-          onUpdate({
-            property: "path",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      />
-      <label>Description</label>
-      <MarkDownTextArea
-        value={component.content}
-        onChange={e =>
-          onUpdate({
-            property: "content",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      />
-      <label>Response Example</label>
-      <MarkDownTextArea
-        value={component.responseExample}
-        onChange={e =>
-          onUpdate({
-            property: "responseExample",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      />
-      <label>Request Example</label>
-      <MarkDownTextArea
-        value={component.requestExample}
-        onChange={e =>
-          onUpdate({
-            property: "requestExample",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      />
+      <form className='grid--gap'>
+        <div className='field-set col--4'>
+          <label>Type</label>
+          <select
+            value={component.httpVerb}
+            onChange={e =>
+              onUpdate({
+                property: "httpVerb",
+                newValue: e.target.value,
+                component,
+                pageId,
+                updateFunc: updateComponent,
+              })
+            }
+          >
+            <option>GET</option>
+            <option>POST</option>
+            <option>PUT</option>
+            <option>PATCH</option>
+            <option>DELETE</option>
+          </select>
+        </div>
+        <div className='field-set col--8'>
+          <label>Path</label>
+          <input
+            type='text'
+            value={component.path}
+            onChange={e =>
+              onUpdate({
+                property: "path",
+                newValue: e.target.value,
+                component,
+                pageId,
+                updateFunc: updateComponent,
+              })
+            }
+          />
+        </div>
+        <div className='field-set col--12'>
+          <label>Description</label>
+          <MarkDownTextArea
+            value={component.content}
+            onChange={e =>
+              onUpdate({
+                property: "content",
+                newValue: e.target.value,
+                component,
+                pageId,
+                updateFunc: updateComponent,
+              })
+            }
+          />
+        </div>
+        <div className='field-set col--12'>
+          <label>Response Example</label>
+          <MarkDownTextArea
+            value={component.responseExample}
+            onChange={e =>
+              onUpdate({
+                property: "responseExample",
+                newValue: e.target.value,
+                component,
+                pageId,
+                updateFunc: updateComponent,
+              })
+            }
+          />
+        </div>
+        <div className='field-set col--12'>
+          <label>Request Example</label>
+          <MarkDownTextArea
+            value={component.requestExample}
+            onChange={e =>
+              onUpdate({
+                property: "requestExample",
+                newValue: e.target.value,
+                component,
+                pageId,
+                updateFunc: updateComponent,
+              })
+            }
+          />
+        </div>
+      </form>
     </div>
   );
 }

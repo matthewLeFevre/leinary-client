@@ -1,18 +1,32 @@
+.project {
+  @include flex(row, nowrap);
+  position: relative;
+}
+.project__nav {
+  margin-right: 0.5rem;
+  width: 300px;
+  position: sticky;
+  top: 0.5rem;
+}
+.project__body {
+  flex: 1;
+}
 .project__section {
   // padding: 1rem;
   background-color: white;
   box-shadow: $bs-1;
   @include bp($bp-lrg) {
-    height: calc(100vh - 4rem);
-    overflow-y: auto;
+    min-height: calc(100vh - 13rem);
   }
 }
 
 .project__section__title {
   // margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #bbb;
+  padding: 0.25rem;
+  background-color: $indigo;
   box-shadow: $bs-1;
+  color: white;
+  font-weight: bold;
 }
 
 .project-editor__components {
@@ -60,6 +74,15 @@
       height: 20px;
     }
   }
+  &__endpoint {
+  }
+}
+.field-set {
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
 }
 
 .project-viewer__components {
@@ -68,6 +91,19 @@
     margin-bottom: 1rem;
   }
   padding-bottom: 5rem;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 1rem;
+  }
+  p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  max-width: 900px;
 }
 
 .project-viewer__text-component {
@@ -80,6 +116,77 @@
     background-color: #ccc;
     font-weight: bold;
     border-radius: 4px;
+  }
+}
+
+.project-viewer__endpoint-component {
+  // border-radius: 10px;
+  // box-shadow: $bs-1;
+  margin: 2rem 0;
+}
+
+.project-viewer__endpoint-component__path {
+  @include flex(row, nowrap, center, center);
+  box-shadow: $bs-1;
+  background-color: #eee;
+  // padding: 0.5rem;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.project-viewer__endpoint-component__http-verb {
+  margin-right: 0.5rem;
+  background-color: grey;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  &.POST {
+    background-color: $caution;
+  }
+  &.GET {
+    background-color: $success;
+  }
+  &.PUT {
+    background-color: $confirm;
+  }
+  &.PATCH {
+    background-color: $indigo;
+  }
+  &.DELETE {
+    background-color: $warning;
+  }
+}
+.project-viewer__endpoint-component__toggle {
+  margin-left: auto;
+  display: block;
+  cursor: pointer;
+  border: none;
+  margin-right: 1rem;
+  &:hover {
+    background-color: #bbb;
+    border-radius: 5px;
+  }
+}
+.project-viewer__endpoint-component__content {
+  // padding: 1rem;
+  position: relative;
+  height: max-content;
+}
+.project-viewer__endpoint-component__tab {
+  display: inline-block;
+  @include transition(background-color);
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5em;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  &:hover {
+    background-color: #eee;
+  }
+  &.active {
+    border-radius: 10px 10px 0 0;
+    border-bottom: #ddd 3px solid;
   }
 }
 
@@ -139,5 +246,64 @@
   }
   &:hover {
     background-color: $warning-2;
+  }
+}
+
+.fade-in {
+  // display: none;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-y: auto;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  &.visible {
+    display: block;
+    animation-name: fade-in;
+    animation-duration: 1s;
+  }
+  &.hidden {
+    display: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    display: block;
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.project-toolbar {
+  background-color: #ddd;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  @include flex(row, nowrap);
+}
+.project-toolbar__btn {
+  @include transition(background-color, 200ms);
+  background-color: transparent;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 1rem;
+  &:hover {
+    background-color: #bbb;
+    box-shadow: $bs-1;
   }
 }

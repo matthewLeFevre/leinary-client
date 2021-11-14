@@ -25,7 +25,7 @@ export default function ProjectNav() {
               {...provided.droppableProps}
               className='project-nav__list'
             >
-              {project.pages?.map(page => (
+              {project?.pages?.map(page => (
                 <ProjectPage page={page} key={page.id} />
               ))}
               {provided.placeholder}

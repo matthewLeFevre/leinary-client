@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ProjectEditorComponent from "./ProjectEditorComponent";
 
 export default function ProjectEditor({ tools, page }) {
@@ -14,12 +14,15 @@ export default function ProjectEditor({ tools, page }) {
     <div>
       <div className='project-editor__components'>
         {page?.components.map(cp => (
-          <ProjectEditorComponent
-            key={cp.id}
-            component={cp}
-            onDelete={() => deleteComponent(page.id, cp.id)}
-            updateComponent={updateComponent}
-          />
+          <Fragment key={cp.id}>
+            <ProjectEditorComponent
+              key={cp.id}
+              component={cp}
+              onDelete={() => deleteComponent(page.id, cp.id)}
+              updateComponent={updateComponent}
+            />
+            <hr />
+          </Fragment>
         ))}
         <div>
           {/* <button type='button' onClick={() => addTitleComponent(page?.id)}>
