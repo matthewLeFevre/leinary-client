@@ -2,8 +2,8 @@ import randomId from "random-id";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useEffectOnce } from "react-use";
-import { useProjectCTX, useProjectsCTX } from "../../../services/hooks";
-import { useRequest } from "../../../services/useRequest";
+import { useProjectsCTX } from "../../../services/contexts";
+import { request } from "../../../services/request";
 import Button from "../../common/Button";
 import AuthenticatedPageContainer from "../../utilities/AuthenticatedPageContainer";
 
@@ -11,16 +11,17 @@ export default function Dashboard() {
   const { projects, setProjects } = useProjectsCTX();
   const [projectName, setProjectName] = useState("");
   useEffectOnce(async () => {
-    const result = await fetch("http://localhost:3333/projects");
-    const json = await result.json();
-    setProjects(json.data);
+    const result = await request({
+      path: "/projects",
+      method: "GET",
+    });
+    setProjects(result.data);
   });
-  const request = useRequest();
   const newProject = async e => {
     e.preventDefault();
     if (projectName !== "") {
       const result = await request({
-        method: "post",
+        method: "POST",
         path: "/projects",
         data: { name: projectName },
       });
@@ -54,7 +55,6 @@ export default function Dashboard() {
 
 function DashboardProject({ project }) {
   const { setProjects } = useProjectsCTX();
-  const request = useRequest();
   const onDelete = async () => {
     const res = await request({
       method: "delete",

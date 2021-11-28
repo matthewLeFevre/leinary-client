@@ -3,59 +3,53 @@ import { useParams } from "react-router";
 import MarkDownTextArea from "../../common/inputs/MarkDownTextArea";
 import gripImage from "../../../assets/grip-vertical.svg";
 import close from "../../../assets/close.svg";
-import { useProjectCTX } from "../../../services/hooks";
+import { Draggable } from "react-beautiful-dnd";
 
 export default function ProjectEditorComponent({
   component,
   onDelete,
   updateComponent,
 }) {
-  const { pageId } = useParams();
-  const { deleteComponent } = useProjectCTX();
   const getComponent = () => {
     switch (component.type) {
       case "TEXT":
-        return (
-          <TextEditorComponent {...{ component, updateComponent, onDelete }} />
-        );
-      case "TITLE":
-        return (
-          <TitleEditorComponent {...{ component, updateComponent, onDelete }} />
-        );
+        return <TextEditorComponent {...{ component, updateComponent }} />;
       case "FIGURE":
-        return (
-          <FigureEditorComponent
-            {...{ component, updateComponent, onDelete }}
-          />
-        );
+        return <FigureEditorComponent {...{ component, updateComponent }} />;
       case "ENDPOINT":
-        return (
-          <EndpointEditorComponent
-            {...{ component, updateComponent, onDelete }}
-          />
-        );
+        return <EndpointEditorComponent {...{ component, updateComponent }} />;
       default:
         return <div>{component.type}</div>;
     }
   };
   return (
-    <div className='project-editor-component'>
-      <div className='project-editor-component__drag'>
-        <img src={gripImage} />
-      </div>
-      {getComponent()}
-      <button
-        onClick={() => deleteComponent(pageId, component.id)}
-        className='project-editor-component__delete'
-      >
-        <img src={close} />
-      </button>
-    </div>
+    <Draggable draggableId={component.id} index={parseInt(component.order)}>
+      {provided => (
+        <div
+          className='project-editor-component'
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+        >
+          <div
+            className='project-editor-component__drag'
+            {...provided.dragHandleProps}
+          >
+            <img src={gripImage} />
+          </div>
+          {getComponent()}
+          <button
+            onClick={onDelete}
+            className='project-editor-component__delete'
+          >
+            <img src={close} />
+          </button>
+        </div>
+      )}
+    </Draggable>
   );
 }
 
-function EndpointEditorComponent({ component, onDelete, updateComponent }) {
-  const { pageId } = useParams();
+function EndpointEditorComponent({ component, updateComponent }) {
   return (
     <div className='project-editor-component__endpoint'>
       <form className='grid--gap'>
@@ -64,12 +58,10 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           <select
             value={component.httpVerb}
             onChange={e =>
-              onUpdate({
+              updateComponent({
                 property: "httpVerb",
                 newValue: e.target.value,
                 component,
-                pageId,
-                updateFunc: updateComponent,
               })
             }
           >
@@ -86,12 +78,10 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
             type='text'
             value={component.path}
             onChange={e =>
-              onUpdate({
+              updateComponent({
                 property: "path",
                 newValue: e.target.value,
                 component,
-                pageId,
-                updateFunc: updateComponent,
               })
             }
           />
@@ -101,12 +91,10 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           <MarkDownTextArea
             value={component.content}
             onChange={e =>
-              onUpdate({
+              updateComponent({
                 property: "content",
                 newValue: e.target.value,
                 component,
-                pageId,
-                updateFunc: updateComponent,
               })
             }
           />
@@ -116,12 +104,10 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           <MarkDownTextArea
             value={component.responseExample}
             onChange={e =>
-              onUpdate({
+              updateComponent({
                 property: "responseExample",
                 newValue: e.target.value,
                 component,
-                pageId,
-                updateFunc: updateComponent,
               })
             }
           />
@@ -131,12 +117,10 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
           <MarkDownTextArea
             value={component.requestExample}
             onChange={e =>
-              onUpdate({
+              updateComponent({
                 property: "requestExample",
                 newValue: e.target.value,
                 component,
-                pageId,
-                updateFunc: updateComponent,
               })
             }
           />
@@ -146,32 +130,27 @@ function EndpointEditorComponent({ component, onDelete, updateComponent }) {
   );
 }
 
-function FigureEditorComponent({ component, onDelete, updateComponent }) {
-  const { pageId } = useParams();
+function FigureEditorComponent({ component, updateComponent }) {
   return (
     <div className='project-editor-component__figure'>
       <input
         type='text'
         value={component.imgResource}
         onChange={e =>
-          onUpdate({
+          updateComponent({
             property: "imgResource",
             newValue: e.target.value,
             component,
-            pageId,
-            updateFunc: updateComponent,
           })
         }
       />
       <MarkDownTextArea
         value={component.content}
         onChange={e =>
-          onUpdate({
+          updateComponent({
             property: "content",
             newValue: e.target.value,
             component,
-            pageId,
-            updateFunc: updateComponent,
           })
         }
       />
@@ -179,66 +158,19 @@ function FigureEditorComponent({ component, onDelete, updateComponent }) {
   );
 }
 
-function TextEditorComponent({ component, onDelete, updateComponent }) {
-  const { pageId } = useParams();
+function TextEditorComponent({ component, updateComponent }) {
   return (
     <div className='project-editor-component__text'>
       <MarkDownTextArea
         value={component.content}
         onChange={e =>
-          onUpdate({
+          updateComponent({
             property: "content",
             newValue: e.target.value,
             component,
-            pageId,
-            updateFunc: updateComponent,
           })
         }
       />
     </div>
   );
-}
-
-function TitleEditorComponent({ component, onDelete, updateComponent }) {
-  const { pageId } = useParams();
-  return (
-    <div className='project-editor-component__title'>
-      <input
-        type='text'
-        value={component.content}
-        onChange={e =>
-          onUpdate({
-            property: "content",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      />
-      <select
-        value={component.level}
-        onChange={e =>
-          onUpdate({
-            property: "level",
-            newValue: e.target.value,
-            component,
-            pageId,
-            updateFunc: updateComponent,
-          })
-        }
-      >
-        <option value={1}>h1</option>
-        <option value={2}>h2</option>
-        <option value={3}>h3</option>
-        <option value={4}>h4</option>
-      </select>
-    </div>
-  );
-}
-
-function onUpdate({ property, newValue, component, pageId, updateFunc }) {
-  const newComponent = { ...component };
-  newComponent[property] = newValue;
-  updateFunc(pageId, newComponent);
 }

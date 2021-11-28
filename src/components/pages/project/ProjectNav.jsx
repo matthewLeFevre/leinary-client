@@ -1,16 +1,24 @@
 import React, { useCallback } from "react";
-import { useProjectCTX } from "../../../services/hooks";
+
 import ProjectPage from "./ProjectPage";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { useProjectCTX } from "../../../services/contexts";
+import reorderPage from "../../../services/projectMethods/reorderPage";
+import { addPage } from "../../../services/projectMethods/addPage";
 
 export default function ProjectNav() {
-  const { project, addPage, reorderPage } = useProjectCTX();
-
-  const onDragEnd = useCallback((result, provided) => {
-    const { destination, draggableId } = result;
-    reorderPage(draggableId, destination.index);
-  }, []);
-
+  const { project, setProject } = useProjectCTX();
+  const onDragEnd = useCallback(
+    (result, provided) => {
+      const { destination, draggableId } = result;
+      const page = project.pages.find(pg => pg.id === draggableId);
+      setProject(reorderPage(project, page, destination.index));
+    },
+    [project]
+  );
+  const onAddPage = () => {
+    setProject(addPage(project));
+  };
   return (
     <div className='project-nav'>
       <DragDropContext
@@ -33,7 +41,7 @@ export default function ProjectNav() {
           )}
         </Droppable>
       </DragDropContext>
-      <button onClick={() => addPage()}>Add Page</button>
+      <button onClick={onAddPage}>Add Page</button>
     </div>
   );
 }

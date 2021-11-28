@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useClickAway } from "react-use";
-import { useProject, useProjectCTX } from "../../../services/hooks";
 import { useParams } from "react-router";
 import gripImage from "../../../assets/grip-vertical.svg";
 import close from "../../../assets/close.svg";
 import { Draggable } from "react-beautiful-dnd";
+import { useProjectCTX } from "../../../services/contexts";
+import updatePage from "../../../services/projectMethods/updatePage";
+import deletePage from "../../../services/projectMethods/deletePage";
 
 export default function ProjectPage({ page }) {
   const { projectId, pageId } = useParams();
-  const { deletePage, updatePage } = useProjectCTX();
+  const { project, setProject } = useProjectCTX();
   const [edit, setEdit] = useState(false);
   const inputRef = useRef(null);
   useClickAway(inputRef, () => {
@@ -19,7 +21,7 @@ export default function ProjectPage({ page }) {
   });
   const onChangeName = e => {
     const newPage = { ...page, name: e.target.value };
-    updatePage(newPage);
+    setProject(updatePage(project, newPage));
   };
   const onKeyUp = e => {
     if (e.key === "Enter") {
@@ -53,7 +55,7 @@ export default function ProjectPage({ page }) {
               </Link>
               <button
                 className='project-nav__page-button'
-                onClick={() => deletePage(page.id)}
+                onClick={() => deletePage(project, page.id)}
                 title='Delete Page'
               >
                 <img src={close} />
